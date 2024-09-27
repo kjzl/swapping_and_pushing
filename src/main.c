@@ -114,7 +114,7 @@ void sa(t_stack **a, bool checker)
 		write(1, "sa\n", 3);
 }
 
-void sb(t_stack **a, bool checker)
+void sb(t_stack **b, bool checker)
 {
 	swap_first_two(b);
 	if(!checker)
