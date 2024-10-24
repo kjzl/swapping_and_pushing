@@ -25,6 +25,8 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+
+
 int		ft_abs(int n);
 void	ft_swap(int *a, int *b);
 

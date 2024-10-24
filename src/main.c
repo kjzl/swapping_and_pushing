@@ -1,57 +1,31 @@
-/*
- sa (swap a): Swap the first 2 elements at the top of stack a.
-Do nothing if there is only one or no elements.
-sb (swap b): Swap the first 2 elements at the top of stack b.
-Do nothing if there is only one or no elements.
-ss : sa and sb at the same time.
-pa (push a): Take the first element at the top of b and put it at the top of a.
-Do nothing if b is empty.
-pb (push b): Take the first element at the top of a and put it at the top of b.
-Do nothing if a is empty.
-ra (rotate a): Shift up all elements of stack a by 1.
-The first element becomes the last one.
-rb (rotate b): Shift up all elements of stack b by 1.
-The first element becomes the last one.
-rr : ra and rb at the same time.
-rra (reverse rotate a): Shift down all elements of stack a by 1.
-The last element becomes the first one.
-rrb (reverse rotate b): Shift down all elements of stack b by 1.
-The last element becomes the first one.
-rrr : rra and rrb at the same time
- *
- *
- * */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <limits.h>
-#include "../libft/libft.h"
-
-typedef struct s_stack
-{
-	int				nbr;
-	int				index;
-	int				push_cost;
-	bool			above_median;
-	bool			cheapest;
-	struct s_stack	*target_node;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-}	t_stack;
+#include "push_swap.h"
 
 int	ft_isspace(int c)
 {
 	return (c == 32 || (c > 8 && c < 14));
 }
 
-long	ft_atol(const char *nptr)
+t_bool	has_overflow(int *output, int neg, const char *nptr)
 {
-	long	res;
+	if (*output > INT_MAX / 10)
+		return (TRUE);
+	if (*output == INT_MAX / 10)
+	{
+		if (neg == -1 && *nptr > '8')
+			return (TRUE);
+		if (neg == 1 && *nptr > '7')
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+t_bool	ft_atoi_checked(const char *nptr, int *output)
+{
 	int		neg;
+	t_bool	contains_digit;
 
 	neg = 1;
-	res = 0;
+	*output = 0;
 	while (*nptr && ft_isspace((int) *nptr))
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
@@ -60,89 +34,101 @@ long	ft_atol(const char *nptr)
 			neg = -1;
 		nptr++;
 	}
+	contains_digit = FALSE;
 	while (*nptr >= '0' && *nptr <= '9')
 	{
-		res = res * 10 + *nptr - '0';
+		if (has_overflow(output, neg, nptr))
+			return (FALSE);
+		*output = (*output) * 10 + *nptr - '0';
 		nptr++;
+		contains_digit = TRUE;
 	}
-	return (res * neg);
+	*output *= neg;
+	return (*nptr == 0 && contains_digit);
 }
 
-void stack_init(t_stack **a, char **argv, bool flag_argc_2)
+void stack_free(t_stack *stack)
 {
-	long	nbr;
-	int		i;
+	t_node	*node;
+	t_node	*next;
+
+	if (stack->head == 0)
+		return ;
+	node = stack->head;
+	next = node->next;
+	while (next != stack->head)
+	{
+		free(node);
+		node = next;
+		next = node->next;
+	}
+	free(node);
+	stack->head = 0;
+	stack->len = 0;
+}
+
+t_bool has_dups(t_stack *stack)
+{
+	t_node	*node;
+	t_node	*node2;
+
+	node = stack->head;
+	while (node != NULL)
+	{
+		node2 = node->next;
+		while (node2 != stack->head)
+		{
+			if (node->nbr == node2->nbr)
+				return (TRUE);
+			node2 = node2->next;
+		}
+		node = node->next;
+	}
+	return (FALSE);
+}
+
+t_bool stack_init(t_stack *a, char **arg_nums)
+{
+	int i;
+	int nbr;
 
 	i = 0;
-	while(argv[i])
+	while(arg_nums[i] != NULL)
 	{
-		if (error_syntax([i]))
-			error_free(a, argv, flag_argc_2);
-		nbr = ft_atol(argv[i]);
-		if (nbr > INT_MAX || nbr < INT_MIN)
-			error_free(a, argv, flag_argc_2);
-		if (error_repitition(*a, (int)nbr))
-			error_free(a, argv, flag_argc_2);
-		append_node(a, (int)nbr);
+		if (!ft_atoi_checked(arg_nums[i], &nbr))
+			break;
+		if(!stack_pushv(a, nbr, 0))
+			break;
 		i++;
 	}
-	if (flag_argc_2)
-		free_matrix(argv);
+	if (arg_nums[i] != NULL || has_dups(a) || !init_targets(a))
+	{
+		stack_free(a);
+		return (FALSE);
+	}
+	return (TRUE);
 }
 
-void	swap_first_two(t_stack **head)
-{
-	if (*head == NULL || head == NULL)
-		return;
-	t_stack *first = head;
-	t_stack *second = (*head)->next;
-
-	first->next = second->next;
-	if(second->next)
-		second->next->prev = first;
-
-	second->prev = NULL;
-	second->next = first;
-	first->prev = second;
-	*head = second;
-}
-
-void sa(t_stack **a, bool checker)
-{
-	swap_first_two(a);
-	if(!checker)
-		write(1, "sa\n", 3);
-}
-
-void sb(t_stack **b, bool checker)
-{
-	swap_first_two(b);
-	if(!checker)
-		write(1, "sb\n", 3);
-}
-
-
-void ss(t_stack **a, t_stack **b, bool checker)
-{
-	swap_first_two(a);
-	swap_first_two(b);
-	if(!checker)
-		write(1, "ss\n", 3);
-}
 
 int main(int argc, char **argv)
 {
-	t_stack *a;
-	t_stack *b;
+	t_ps	ps;
+	t_stack a;
+	t_stack b;
+	char	**arg_nums;
 
-	a = NULL;
-	b = NULL;
-
-	if (argc == 1 || (argc == 2 && !argv[1][0]))
+	a = (t_stack){0};
+	b = (t_stack){0};
+	ps = (t_ps){&a, &b};
+	if (argc == 1)
 		return (1);
 	else if (argc == 2)
-		argv = ft_split(argv[1], ' ');
-	stack_init(&a, argv + 1, argc == 2);
+		arg_nums = ft_split(argv[1], ' ');
+	else
+		arg_nums = argv + 1;
+	// TODO: if stack_init ...
+	// free arg_nums if from ft_split
+	stack_init(&a, arg_nums);
 	if (!stack_sorted(a))
 	{
 		if (stack_len(a) == 2)
@@ -153,6 +139,6 @@ int main(int argc, char **argv)
 			sort_stacks(&a, &b);
 	}
 	free_stack(&a);
-		
+
 	return (0);
 }
