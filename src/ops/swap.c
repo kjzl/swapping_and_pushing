@@ -17,8 +17,10 @@ static t_bool	swap_first_two(t_stack *stack)
 	else
 	{
 		old_head->next = stack->head->next;
+		stack->head->next->prev = old_head;
 		stack->head->next = old_head;
 		stack->head->prev = old_head->prev;
+		old_head->prev->next = stack->head;
 		old_head->prev = stack->head;
 	}
 	return (TRUE);
