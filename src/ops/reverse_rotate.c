@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../push_swap.h"
 
 t_bool reverse_rotate(t_stack *stack)
 {

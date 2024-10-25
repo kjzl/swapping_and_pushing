@@ -11,50 +11,41 @@
 # **************************************************************************** #
 
 NAME = push_swap
+CFLAGS = -Wall -Wextra -Werror -O3
+# CFLAGS = -Wall -Wextra -Werror -g -Og
 
-#Directories
-SRCDIR := src
-INCDIR := inc
-OBJDIR := obj
-LIBFTDIR := libft
+LIBFTDIR = libft
 
-#Libraries
-LIBFT := $(LIBFTDIR)/libft.a
+SRCS = \
+	src/init_targets.c\
+	src/sort.c\
+	src/sort_less_than_five.c\
+	src/sort_utils.c\
+	src/sort_utils2.c\
+	src/main.c\
+	src/ops/reverse_rotate.c\
+	src/ops/push.c\
+	src/ops/rotate.c\
+	src/ops/swap.c\
 
-#Sources
-SRCS := $(addprefix $(SRCDIR)/, main.c)
+OBJ = $(SRCS:.c=.o)
 
-#Objects
-OBJS := $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
-
-#Flags
-CC := cc
-CFLAGS :=  -g -I$(INCDIR) -I$(LIBFTDIR)
-LDFLAGS := -L$(LIBFTDIR)
+%.o: %.c
+	cc $(CFLAGS) -c -I$(LIBFTDIR) $< -o $@
 
 all: $(NAME)
 
-$(NAME): $(HEADERS) $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
-
-$(LIBFT): $(LIBFTHEADERS)
-	$(MAKE) -C $(LIBFTDIR)
-
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+$(NAME): $(OBJ)
+	$(MAKE) -C $(LIBFTDIR) CFLAGS='$(CFLAGS)'
+	cc $(CFLAGS) $(OBJ) -L$(LIBFTDIR) -lft -o $(NAME)
 
 clean:
-	$(RM) $(OBJS)
-	$(RM) -r $(OBJDIR)
 	$(MAKE) -C $(LIBFTDIR) clean
+	rm -f $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFTDIR) fclean
+	rm -f $(NAME)
 
 re: fclean all
 

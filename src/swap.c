@@ -1,7 +1,7 @@
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
-static t_bool	swap_first_two(t_node **head)
+t_bool	swap_first_two(t_node **head)
 {
 	if (*head == NULL || (*head)->next == *head )
 	{

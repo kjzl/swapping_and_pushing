@@ -12,39 +12,107 @@
 
 #include "push_swap.h"
 
-t_bool is_sorted(t_ps *stack)
+void sort_three_a(t_ps *ps)
 {
-	t_node *cur;
+	t_stack	*stack;
 
-	if (!stack->head || !stack->next->head)
-		return (TRUE);
-	cur = stack->head;
-	while (cur->head != stack->head)
+	stack = ps->a;
+	if (stack->len != 3)
+		return ;
+	if (!is_sorted(stack))
 	{
-		if (cur->nbr > cur->next->nbr)
-			return (FALSE);
-		cur = cur->next;
-	}
-	return (TRUE);
-}
-
-void sort_three(t_ps a)
-{
-	if (!is_sorted(a))
-	{
-		if ()
-			sa(a);
-		else if ()
+		if (node_is_max(stack, stack->head))
+			sa(ps);
+		if (node_is_max(stack, stack->head->next))
 		{
-			sa(a);
-			rra(a);
+			rra(ps);
 		}
-		else ()
-			ra(a);
+		if (node_is_min(stack, stack->head->next))
+			sa(ps);
 	}
 }
 
-void sort_less_than_five(t_ps a)
+int find_position(t_stack *stack, int target_index)
 {
+	t_node	*node;
+	int		index;
 
+	node = stack->head;
+	index = 0;
+	while (node != NULL)
+	{
+		if (node->target_index == target_index)
+			return (index);
+		node = node->next;
+		++index;
+	}
+	return (-1);
+}
+
+void sort_four_a(t_ps *ps)
+{
+	t_stack	*stack;
+	int		target_index;
+
+	stack = ps->a;
+	if (stack->len != 4 || is_sorted(stack))
+		return ;
+	target_index = find_position(stack, stack_min(stack)->target_index);
+	if (target_index <= 1)
+	{
+		while (stack->head->target_index != stack_min(stack)->target_index)
+			ra(ps);
+	}
+	else
+	{
+		while (stack->head->target_index != stack_min(stack)->target_index)
+			rra(ps);
+	}
+	pb(ps);
+	sort_three_a(ps);
+	pa(ps);
+}
+
+void sort_five_a(t_ps *ps)
+{
+	t_stack	*stack;
+	int		target_index;
+
+	stack = ps->a;
+	if (stack->len != 5 || is_sorted(stack))
+		return ;
+	target_index = find_position(stack, 0);
+	if (target_index <= 2)
+	{
+		while (stack->head->target_index != 0)
+			ra(ps);
+	}
+	else
+	{
+		while (stack->head->target_index != 0)
+			rra(ps);
+	}
+	pb(ps);
+	sort_four_a(ps);
+	pa(ps);
+}
+
+void sort_five_or_less_a(t_ps *ps)
+{
+	t_stack	*stack;
+
+	stack = ps->a;
+	if (stack->len > 5)
+		return ;
+	if (!is_sorted(stack))
+	{
+		if (stack->len == 2)
+			sa(ps);
+		else if (stack->len == 3)
+			sort_three_a(ps);
+		else if (stack->len == 4)
+			sort_four_a(ps);
+		else if (stack->len == 5)
+			sort_five_a(ps);
+	}
 }
