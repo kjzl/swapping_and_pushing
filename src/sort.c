@@ -19,7 +19,6 @@ int find_chunk_min(t_chunk chunk)
 	return (min);
 }
 
-
 void find_pivots(t_chunk chunk, int pq[2])
 {
 	int one_third;
@@ -63,9 +62,9 @@ void chunk_push(t_ps *ps, t_chunk *from, t_chunk *to)
 
 	if (from->len == 0)
 		return ;
-	from->len--;
 	if (from->location != to->location)
 	{
+		from->len--;
 		node = top_chunk_node(ps, *from);
 		if (to->len == 0 || !loc_bottom(to->location))
 			to->head = node;
@@ -83,8 +82,15 @@ void chunk_push(t_ps *ps, t_chunk *from, t_chunk *to)
 			ra(ps);
 		else if (to->location == BOTTOM_B)
 			rb(ps);
+		to->len++;
 	}
-	to->len++;
+	else
+	{
+		// print from where to which location to which location we try to push
+		printf("from %d to %d\n", from->location, to->location);
+	}
+	// if (to->head == NULL)
+	// 	printf("to->head is NULL\n");
 }
 
 void split_chunk(t_ps *ps, t_chunk chunk, t_chunk splitted[3])
@@ -111,13 +117,19 @@ void	init_splitted_chunks(t_chunk chunk, t_chunk splitted[3])
 	splitted[0] = (t_chunk){.head = 0, .len = 0, .location = BOTTOM_A};
 	splitted[1] = (t_chunk){.head = 0, .len = 0, .location = TOP_B};
 	splitted[2] = (t_chunk){.head = 0, .len = 0, .location = BOTTOM_B};
-	if (chunk.location == BOTTOM_B || chunk.location == TOP_B)
-	{
-		if (chunk.location == BOTTOM_B)
-			splitted[2].location = BOTTOM_A;
-		if (chunk.location == TOP_B)
-			splitted[1].location = BOTTOM_A;
+	if (chunk.location == BOTTOM_A)
 		splitted[0].location = TOP_A;
+	else if (chunk.location == TOP_A)
+		splitted[0].location = BOTTOM_A;
+	else if (chunk.location == BOTTOM_B)
+	{
+		splitted[0].location = TOP_A;
+		splitted[2].location = BOTTOM_A;
+	}
+	else if (chunk.location == TOP_B)
+	{
+		splitted[0].location = TOP_A;
+		splitted[1].location = BOTTOM_A;
 	}
 }
 
@@ -126,6 +138,8 @@ void	push_chunk_top_a(t_ps *ps, t_chunk chunk)
 	t_chunk	top_a;
 
 	top_a = (t_chunk){.head = 0, .len = 0, .location = TOP_A};
+	if (chunk.location == TOP_A)
+		return;
 	while (chunk.len)
 		chunk_push(ps, &chunk, &top_a);
 }
@@ -150,10 +164,10 @@ void	recursive_chunk_sort(t_ps *ps, t_chunk chunk)
 	}
 	else
 	{
-		printf("A: ");
-		print_stack(ps->a);
-		printf("B: ");
-		print_stack(ps->b);
+		//printf("A: ");
+		//print_stack(ps->a);
+		//printf("B: ");
+		//print_stack(ps->b);
 		split_chunk(ps, chunk, splitted);
 		recursive_chunk_sort(ps, splitted[0]); //MAX
 		recursive_chunk_sort(ps, splitted[1]); //MID
