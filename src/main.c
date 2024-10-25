@@ -106,7 +106,6 @@ t_bool stack_init(t_stack *a, char **arg_nums)
 			break;
 		i--;
 	}
-	print_stack(a);
 	if (i >= 0 || has_dups(a) || !init_targets(a))
 	{
 		stack_free(a);

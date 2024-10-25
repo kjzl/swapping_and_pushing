@@ -148,14 +148,23 @@ void	recursive_chunk_sort(t_ps *ps, t_chunk chunk)
 {
 	t_chunk splitted[3];
 
+	printf("rec chunk_sort\n");
+	print_stack(ps->a);
+	print_stack(ps->b);
 	init_splitted_chunks(chunk, splitted);
 	if (chunk.len == 1)
+	{
 		push_chunk_top_a(ps, chunk);
+		printf("sorted top 1\n");
+		print_stack(ps->a);
+	}
 	else if (chunk.len == 2)
 	{
 		push_chunk_top_a(ps, chunk);
 		if (ps->a->head->target_index > ps->a->head->next->target_index)
 			sa(ps);
+		printf("sorted top 2\n");
+		print_stack(ps->a);
 	}
 	else if (chunk.len == 3)
 	{

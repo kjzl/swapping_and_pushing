@@ -70,3 +70,7 @@ t_node *stack_min(t_stack *stack);
 void	sort_top_three_a(t_ps *ps);
 void sort_five_or_less_a(t_ps *ps);
 void sort_everything(t_ps *ps);
+t_bool	range_node_is_max(t_stack *stack, t_node *node, int range);
+t_bool	range_node_is_min(t_stack *stack, t_node *node, int range);
+t_node	*range_stack_min(t_stack *stack, int range);
+t_node	*range_stack_max(t_stack *stack, int range);
