@@ -9,7 +9,7 @@ void sort_top_three_a(t_ps *ps)
 		return ;
 	if (!is_sorted(stack))
 	{
-		printf("top3 max nbr: %d\n", range_stack_max(stack, 3)->nbr);
+		//printf("top3 max nbr: %d\n", range_stack_max(stack, 3)->nbr);
 		if (range_node_is_max(stack, stack->head, 3))
 			sa(ps);
 		if (range_node_is_max(stack, stack->head->next, 3))
@@ -21,6 +21,6 @@ void sort_top_three_a(t_ps *ps)
 		if (range_node_is_min(stack, stack->head->next, 3))
 			sa(ps);
 	}
-	printf("sorted top3 a:\n");
+	//printf("sorted top3 a:\n");
 	print_stack(ps->a);
 }

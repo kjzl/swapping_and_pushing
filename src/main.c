@@ -121,15 +121,15 @@ void	print_stack(t_stack *stack)
 	node = stack->head;
 	if (node == NULL)
 	{
-		printf("empty\n");
+		//printf("empty\n");
 		return ;
 	}
 	while (node->next != stack->head)
 	{
-		printf("%d ", node->nbr);
+		//printf("%d ", node->nbr);
 		node = node->next;
 	}
-	printf("%d\n", node->nbr);
+	//printf("%d\n", node->nbr);
 }
 
 int main(int argc, char **argv)
