@@ -37,11 +37,11 @@ t_node *stack_max(t_stack *stack)
 	t_node *cur;
 	t_node *max;
 
-	if (!stack->head)
+	if (stack->len == 0)
 		return (NULL);
-	cur = stack->head;
-	max = cur;
-	while (cur->next != stack->head)
+	cur = stack->head->next;
+	max = stack->head;
+	while (cur != stack->head)
 	{
 		if (cur->nbr > max->nbr)
 			max = cur;
@@ -55,11 +55,11 @@ t_node *stack_min(t_stack *stack)
 	t_node *cur;
 	t_node *min;
 
-	if (!stack->head)
+	if (stack->len == 0)
 		return (NULL);
-	cur = stack->head;
-	min = cur;
-	while (cur->next != stack->head)
+	cur = stack->head->next;
+	min = stack->head;
+	while (cur != stack->head)
 	{
 		if (cur->nbr < min->nbr)
 			min = cur;
