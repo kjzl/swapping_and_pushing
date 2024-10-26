@@ -1,6 +1,6 @@
 #include "../push_swap.h"
 
-t_bool reverse_rotate(t_stack *stack)
+static t_bool reverse_rotate(t_stack *stack)
 {
 	if (stack->head == NULL || stack->head->prev == stack->head)
 			return (FALSE);

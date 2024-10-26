@@ -18,15 +18,20 @@ LIBFTDIR = libft
 
 SRCS = \
 	src/init_targets.c\
-	src/sort.c\
-	src/sort_less_than_five.c\
-	src/sort_utils.c\
-	src/sort_utils2.c\
 	src/main.c\
-	src/ops/reverse_rotate.c\
+	src/sort.c\
+	src/sort_five.c\
+	src/sort_utils.c\
 	src/ops/push.c\
+	src/ops/reverse_rotate.c\
 	src/ops/rotate.c\
 	src/ops/swap.c\
+	src/atoi_checked.c\
+	src/stack_parse.c\
+	src/location.c\
+	src/chunk.c\
+	src/min_max_ranged.c\
+	src/min_max.c\
 
 OBJ = $(SRCS:.c=.o)
 

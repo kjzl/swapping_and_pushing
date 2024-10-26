@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void quickly_sort_array(int *array, int size)
+static void quickly_sort_array(int *array, int size)
 {
 	int	index;
 	int	tmp;
@@ -22,7 +22,7 @@ void quickly_sort_array(int *array, int size)
 	}
 }
 
-int *stack_to_array(t_stack *stack)
+static int	*stack_to_array(t_stack *stack)
 {
 	int		*array;
 	t_node	*node;
@@ -42,7 +42,7 @@ int *stack_to_array(t_stack *stack)
 	return (array);
 }
 
-t_node *node_by_nbr(t_stack *stack, int nbr)
+static t_node *node_by_nbr(t_stack *stack, int nbr)
 {
 	t_node *node;
 
@@ -56,7 +56,7 @@ t_node *node_by_nbr(t_stack *stack, int nbr)
 	return (NULL);
 }
 
-void set_targets(t_stack *stack, int *sorted_arr)
+static void set_targets(t_stack *stack, int *sorted_arr)
 {
 	t_node	*node;
 	int		index;

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void sort_three_a(t_ps *ps)
+static void sort_three_a(t_ps *ps)
 {
 	t_stack	*stack;
 
@@ -32,7 +32,7 @@ void sort_three_a(t_ps *ps)
 	}
 }
 
-int find_position(t_stack *stack, int target_index)
+static int find_position(t_stack *stack, int target_index)
 {
 	t_node	*node;
 	int		index;
@@ -49,7 +49,7 @@ int find_position(t_stack *stack, int target_index)
 	return (-1);
 }
 
-void sort_four_a(t_ps *ps)
+static void sort_four_a(t_ps *ps)
 {
 	t_stack	*stack;
 	int		target_index;
@@ -73,7 +73,7 @@ void sort_four_a(t_ps *ps)
 	pa(ps);
 }
 
-void sort_five_a(t_ps *ps)
+static void sort_five_a(t_ps *ps)
 {
 	t_stack	*stack;
 	int		target_index;

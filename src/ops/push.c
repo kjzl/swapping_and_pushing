@@ -1,6 +1,6 @@
 #include "../push_swap.h"
 
-void	stack_push(t_stack *stack, t_node *node)
+static void	stack_push(t_stack *stack, t_node *node)
 {
 	t_node	*old_head;
 
@@ -21,7 +21,7 @@ void	stack_push(t_stack *stack, t_node *node)
 		old_head->next = stack->head;
 }
 
-t_bool	stack_pushv(t_stack *stack, int val, unsigned int target_pos)
+t_bool	stack_pushv(t_stack *stack, int val, int target_pos)
 {
 	t_node	*node;
 
@@ -34,7 +34,7 @@ t_bool	stack_pushv(t_stack *stack, int val, unsigned int target_pos)
 	return (TRUE);
 }
 
-t_node	*stack_pop(t_stack *stack)
+static t_node	*stack_pop(t_stack *stack)
 {
 	t_node	*old_head;
 

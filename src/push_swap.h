@@ -57,18 +57,33 @@ void rra(t_ps *ps);
 void rrb(t_ps *ps);
 void rrr(t_ps *ps);
 
-t_bool	stack_pushv(t_stack *stack, int val, unsigned int target_pos);
+t_bool	stack_pushv(t_stack *stack, int val, int target_pos);
 
-t_bool init_targets(t_stack *stack);
-t_bool is_sorted(t_stack *stack);
-t_bool node_is_min(t_stack *stack, t_node *node);
-t_bool node_is_max(t_stack *stack, t_node *node);
-t_node *stack_max(t_stack *stack);
-t_node *stack_min(t_stack *stack);
+void	recursive_chunk_sort(t_ps *ps, t_chunk chunk);
+t_bool	is_sorted(t_stack *stack);
 void	sort_top_three_a(t_ps *ps);
-void sort_five_or_less_a(t_ps *ps);
-void sort_everything(t_ps *ps);
+void	sort_five_or_less_a(t_ps *ps);
+
+t_bool	node_is_min(t_stack *stack, t_node *node);
+t_bool	node_is_max(t_stack *stack, t_node *node);
+t_node	*stack_max(t_stack *stack);
+t_node	*stack_min(t_stack *stack);
+
 t_bool	range_node_is_max(t_stack *stack, t_node *node, int range);
 t_bool	range_node_is_min(t_stack *stack, t_node *node, int range);
 t_node	*range_stack_min(t_stack *stack, int range);
 t_node	*range_stack_max(t_stack *stack, int range);
+
+void	stack_free(t_stack *stack);
+t_bool	init_targets(t_stack *stack);
+t_bool	stack_init(t_stack *a, char **arg_nums);
+t_bool	ft_atoi_checked(const char *nptr, int *output);
+
+t_bool	loc_on_a(t_location loc);
+t_bool	loc_bottom(t_location loc);
+
+int		find_chunk_min_target(t_chunk chunk);
+void	chunk_push(t_ps *ps, t_chunk *from, t_chunk *to);
+t_node	*top_chunk_node(t_ps *ps, t_chunk chunk);
+t_stack	*stack_of_chunk(t_ps *ps, t_chunk chunk);
+void	chunk_optimize(t_ps *data, t_chunk *to_sort);
