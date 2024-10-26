@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 NAME = push_swap
-# CFLAGS = -Wall -Wextra -Werror -O3
-CFLAGS = -Wall -Wextra -Werror -g -Og
+CFLAGS = -Wall -Wextra -Werror -O3
+# CFLAGS = -Wall -Wextra -Werror -g -Og
 
 LIBFTDIR = libft
 
@@ -42,7 +42,6 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(MAKE) -C $(LIBFTDIR)
-	# CFLAGS='$(CFLAGS)'
 	cc $(CFLAGS) $(OBJ) -L$(LIBFTDIR) -lft -o $(NAME)
 
 clean:
