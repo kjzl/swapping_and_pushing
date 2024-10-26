@@ -93,23 +93,12 @@ void chunk_push(t_ps *ps, t_chunk *from, t_chunk *to)
 	// 	printf("to->head is NULL\n");
 }
 
-void split_chunk(t_ps *ps, t_chunk chunk, t_chunk splitted[3])
+void	chunk_optimize(t_ps *data, t_chunk *to_sort)
 {
-	int pivots[2];
-	t_node *node;
-
-	find_pivots(chunk, pivots);
-	node = top_chunk_node(ps, chunk);
-	while (chunk.len)
-	{
-		if (node->target_index <= pivots[0])
-			chunk_push(ps, &chunk, &splitted[2]);
-		else if (node->target_index <= pivots[1])
-			chunk_push(ps, &chunk, &splitted[1]);
-		else
-			chunk_push(ps, &chunk, &splitted[0]);
-		node = top_chunk_node(ps, chunk);
-	}
+	if (to_sort->location == BOTTOM_B && to_sort->len == data->b->len)
+		to_sort->location = TOP_B;
+	if (to_sort->location == BOTTOM_A && to_sort->len == data->a->len)
+		to_sort->location = TOP_A;
 }
 
 void	init_splitted_chunks(t_chunk chunk, t_chunk splitted[3])
@@ -133,6 +122,27 @@ void	init_splitted_chunks(t_chunk chunk, t_chunk splitted[3])
 	}
 }
 
+void split_chunk(t_ps *ps, t_chunk chunk, t_chunk splitted[3])
+{
+	int pivots[2];
+	t_node *node;
+
+	chunk_optimize(ps, &chunk);
+	init_splitted_chunks(chunk, splitted);
+	find_pivots(chunk, pivots);
+	node = top_chunk_node(ps, chunk);
+	while (chunk.len)
+	{
+		if (node->target_index <= pivots[0])
+			chunk_push(ps, &chunk, &splitted[2]);
+		else if (node->target_index <= pivots[1])
+			chunk_push(ps, &chunk, &splitted[1]);
+		else
+			chunk_push(ps, &chunk, &splitted[0]);
+		node = top_chunk_node(ps, chunk);
+	}
+}
+
 void	push_chunk_top_a(t_ps *ps, t_chunk chunk)
 {
 	t_chunk	top_a;
@@ -151,7 +161,6 @@ void	recursive_chunk_sort(t_ps *ps, t_chunk chunk)
 	//printf("rec chunk_sort\n");
 	print_stack(ps->a);
 	print_stack(ps->b);
-	init_splitted_chunks(chunk, splitted);
 	if (chunk.len == 1)
 	{
 		push_chunk_top_a(ps, chunk);
