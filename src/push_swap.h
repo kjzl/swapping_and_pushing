@@ -45,8 +45,6 @@ typedef int t_bool;
 #define TRUE 1
 #define FALSE 0
 
-void	print_stack(t_stack *stack);
-
 void sa(t_ps *ps);
 void sb(t_ps *ps);
 void ss(t_ps *ps);

@@ -1,10 +1,5 @@
 #include "push_swap.h"
 
-int	ft_isspace(int c)
-{
-	return (c == 32 || (c > 8 && c < 14));
-}
-
 t_bool	has_overflow(int *output, int neg, const char *nptr)
 {
 	if (*output > INT_MAX / 10)
@@ -72,6 +67,8 @@ t_bool has_dups(t_stack *stack)
 	t_node	*node;
 	t_node	*node2;
 
+	if (stack->len == 0)
+		return (FALSE);
 	node = stack->head;
 	while (node != stack->head->prev)
 	{
@@ -108,28 +105,24 @@ t_bool stack_init(t_stack *a, char **arg_nums)
 	}
 	if (i >= 0 || has_dups(a) || !init_targets(a))
 	{
+		ft_printf("Error\n");
 		stack_free(a);
 		return (FALSE);
 	}
 	return (TRUE);
 }
 
-void	print_stack(t_stack *stack)
+void	ft_free_split(char **strs)
 {
-	t_node	*node;
+	int i;
 
-	node = stack->head;
-	if (node == NULL)
+	i = 0;
+	while (strs[i] != NULL)
 	{
-		//printf("empty\n");
-		return ;
+		free(strs[i]);
+		i++;
 	}
-	while (node->next != stack->head)
-	{
-		//printf("%d ", node->nbr);
-		node = node->next;
-	}
-	//printf("%d\n", node->nbr);
+	free(strs);
 }
 
 int main(int argc, char **argv)
@@ -148,12 +141,10 @@ int main(int argc, char **argv)
 		arg_nums = ft_split(argv[1], ' ');
 	else
 		arg_nums = argv + 1;
-	// TODO: if stack_init ...
-	// free arg_nums if from ft_split
 	stack_init(&a, arg_nums);
+	if (argc == 2)
+		ft_free_split(arg_nums);
 	sort_everything(&ps);
-	print_stack(&a);
 	stack_free(&a);
-
 	return (0);
 }

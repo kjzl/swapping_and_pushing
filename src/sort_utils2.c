@@ -21,6 +21,4 @@ void sort_top_three_a(t_ps *ps)
 		if (range_node_is_min(stack, stack->head->next, 3))
 			sa(ps);
 	}
-	//printf("sorted top3 a:\n");
-	print_stack(ps->a);
 }
