@@ -24,21 +24,21 @@ static t_bool	has_dups(t_stack *stack)
 
 t_bool	stack_init(t_stack *a, char **arg_nums)
 {
-	int i;
+	int	i;
 	int	max_len;
-	int nbr;
+	int	nbr;
 
 	i = 0;
 	max_len = 0;
 	while (arg_nums[max_len] != NULL)
 		max_len++;
 	i = max_len - 1;
-	while(i >= 0)
+	while (i >= 0)
 	{
 		if (!ft_atoi_checked(arg_nums[i], &nbr))
-			break;
-		if(!stack_pushv(a, nbr, 0))
-			break;
+			break ;
+		if (!stack_pushv(a, nbr, 0))
+			break ;
 		i--;
 	}
 	if (i >= 0 || has_dups(a) || !init_targets(a))

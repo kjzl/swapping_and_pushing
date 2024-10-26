@@ -40,22 +40,22 @@ typedef struct s_ps
 	t_stack		*b;
 }	t_ps;
 
-typedef int t_bool;
+typedef int	t_bool;
 
 #define TRUE 1
 #define FALSE 0
 
-void sa(t_ps *ps);
-void sb(t_ps *ps);
-void ss(t_ps *ps);
-void pa(t_ps *ps);
-void pb(t_ps *ps);
-void ra(t_ps *ps);
-void rb(t_ps *ps);
-void rr(t_ps *ps);
-void rra(t_ps *ps);
-void rrb(t_ps *ps);
-void rrr(t_ps *ps);
+void	sa(t_ps *ps);
+void	sb(t_ps *ps);
+void	ss(t_ps *ps);
+void	pa(t_ps *ps);
+void	pb(t_ps *ps);
+void	ra(t_ps *ps);
+void	rb(t_ps *ps);
+void	rr(t_ps *ps);
+void	rra(t_ps *ps);
+void	rrb(t_ps *ps);
+void	rrr(t_ps *ps);
 
 t_bool	stack_pushv(t_stack *stack, int val, int target_pos);
 

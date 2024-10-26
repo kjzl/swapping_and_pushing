@@ -1,8 +1,8 @@
 #include "push_swap.h"
 
-t_bool is_sorted(t_stack *stack)
+t_bool	is_sorted(t_stack *stack)
 {
-	t_node *cur;
+	t_node	*cur;
 
 	if (!stack->head || stack->head->next == stack->head)
 		return (TRUE);
@@ -16,7 +16,7 @@ t_bool is_sorted(t_stack *stack)
 	return (TRUE);
 }
 
-void sort_top_three_a(t_ps *ps)
+void	sort_top_three_a(t_ps *ps)
 {
 	t_stack	*stack;
 

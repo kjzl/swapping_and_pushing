@@ -1,8 +1,8 @@
 #include "push_swap.h"
 
-static void find_pivots(t_chunk chunk, int pq[2])
+static void	find_pivots(t_chunk chunk, int pq[2])
 {
-	int one_third;
+	int	one_third;
 
 	one_third = chunk.len / 3;
 	pq[0] = find_chunk_min_target(chunk) + one_third - 1;
@@ -30,10 +30,10 @@ static void	init_splitted_chunks(t_chunk chunk, t_chunk splitted[3])
 	}
 }
 
-static void split_chunk(t_ps *ps, t_chunk chunk, t_chunk splitted[3])
+static void	split_chunk(t_ps *ps, t_chunk chunk, t_chunk splitted[3])
 {
-	int pivots[2];
-	t_node *node;
+	int		pivots[2];
+	t_node	*node;
 
 	chunk_optimize(ps, &chunk);
 	init_splitted_chunks(chunk, splitted);
@@ -57,23 +57,23 @@ static void	push_chunk_top_a(t_ps *ps, t_chunk chunk)
 
 	top_a = (t_chunk){.head = 0, .len = 0, .location = TOP_A};
 	if (chunk.location == TOP_A)
-		return;
+		return ;
 	while (chunk.len)
 		chunk_push(ps, &chunk, &top_a);
 }
 
 void	recursive_chunk_sort(t_ps *ps, t_chunk chunk)
 {
-	t_chunk splitted[3];
+	t_chunk	splitted[3];
 	int		chunk_len;
 
 	if (chunk.len > 3)
 	{
 		split_chunk(ps, chunk, splitted);
-		recursive_chunk_sort(ps, splitted[0]); //MAX
-		recursive_chunk_sort(ps, splitted[1]); //MID
-		recursive_chunk_sort(ps, splitted[2]); //MIN
-		return;
+		recursive_chunk_sort(ps, splitted[0]);
+		recursive_chunk_sort(ps, splitted[1]);
+		recursive_chunk_sort(ps, splitted[2]);
+		return ;
 	}
 	chunk_len = chunk.len;
 	push_chunk_top_a(ps, chunk);

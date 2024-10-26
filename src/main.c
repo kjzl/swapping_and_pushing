@@ -7,11 +7,11 @@ static void	sort_everything(t_ps *ps)
 		if (ps->a->len <= 5)
 			sort_five_or_less_a(ps);
 		else
-			recursive_chunk_sort(ps, (t_chunk){.head = ps->a->head, .len = ps->a->len, .location = TOP_A});
+			recursive_chunk_sort(ps, (t_chunk){ps->a->len, ps->a->head, TOP_A});
 	}
 }
 
-void stack_free(t_stack *stack)
+void	stack_free(t_stack *stack)
 {
 	t_node	*node;
 	t_node	*next;
@@ -33,7 +33,7 @@ void stack_free(t_stack *stack)
 
 void	ft_free_split(char **strs)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (strs[i] != NULL)
@@ -44,11 +44,11 @@ void	ft_free_split(char **strs)
 	free(strs);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_ps	ps;
-	t_stack a;
-	t_stack b;
+	t_stack	a;
+	t_stack	b;
 	char	**arg_nums;
 
 	a = (t_stack){0};

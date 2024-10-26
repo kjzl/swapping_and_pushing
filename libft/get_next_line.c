@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "get_next_line.h"
 
 static int	init_buffer(t_stream *stream, unsigned char **re, ssize_t *rs)

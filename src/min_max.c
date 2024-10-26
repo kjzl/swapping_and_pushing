@@ -1,25 +1,25 @@
 #include "push_swap.h"
 
-t_bool node_is_min(t_stack *stack, t_node *node)
+t_bool	node_is_min(t_stack *stack, t_node *node)
 {
-	t_node *min;
+	t_node	*min;
 
 	min = stack_min(stack);
 	return (node == min);
 }
 
-t_bool node_is_max(t_stack *stack, t_node *node)
+t_bool	node_is_max(t_stack *stack, t_node *node)
 {
-	t_node *max;
+	t_node	*max;
 
 	max = stack_max(stack);
 	return (node == max);
 }
 
-t_node *stack_max(t_stack *stack)
+t_node	*stack_max(t_stack *stack)
 {
-	t_node *cur;
-	t_node *max;
+	t_node	*cur;
+	t_node	*max;
 
 	if (stack->len == 0)
 		return (NULL);
@@ -34,10 +34,10 @@ t_node *stack_max(t_stack *stack)
 	return (max);
 }
 
-t_node *stack_min(t_stack *stack)
+t_node	*stack_min(t_stack *stack)
 {
-	t_node *cur;
-	t_node *min;
+	t_node	*cur;
+	t_node	*min;
 
 	if (stack->len == 0)
 		return (NULL);

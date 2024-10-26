@@ -54,7 +54,8 @@ static t_node	*stack_pop(t_stack *stack)
 	old_head->prev = 0;
 	return (old_head);
 }
-void pa(t_ps *ps)
+
+void	pa(t_ps *ps)
 {
 	t_node	*node;
 
@@ -65,7 +66,7 @@ void pa(t_ps *ps)
 	write(1, "pa\n", 3);
 }
 
-void pb(t_ps *ps)
+void	pb(t_ps *ps)
 {
 	t_node	*node;
 

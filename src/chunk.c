@@ -18,7 +18,7 @@ t_stack	*stack_of_chunk(t_ps *ps, t_chunk chunk)
 	return (ps->b);
 }
 
-void chunk_push(t_ps *ps, t_chunk *from, t_chunk *to)
+void	chunk_push(t_ps *ps, t_chunk *from, t_chunk *to)
 {
 	t_node	*node;
 
@@ -45,11 +45,11 @@ void chunk_push(t_ps *ps, t_chunk *from, t_chunk *to)
 	to->len++;
 }
 
-int find_chunk_min_target(t_chunk chunk)
+int	find_chunk_min_target(t_chunk chunk)
 {
-	int min;
-	t_node *node;
-	int	i;
+	int		min;
+	t_node	*node;
+	int		i;
 
 	i = 0;
 	min = INT_MAX;
